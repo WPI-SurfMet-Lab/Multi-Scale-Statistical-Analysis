@@ -1,16 +1,10 @@
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression
 import numpy as np
 from read_data import *
 import sys
 import matplotlib.pyplot as plt
-import os
 
 DEGREE = 10      # Degree of polynomial regression for interpolation model
 BASE = 0        # The surface to base the scales off of
-PERIOD = 10
-HEIGHT = 2
-SHIFT = 1
 
 # Take in argument data which should be an array of all surfaces and their data
 # Function will interpolate the data based on the first surface, filling any of these
@@ -18,7 +12,9 @@ SHIFT = 1
 def interpolate(data, stat):
     # Get the scales to be the base of inteprolation
     base = data[BASE]
-    base_x = base[stat]
+    base_x = base["scale of analysis"]
+
+    new_data = []
 
     # Use a logarithmic transformation and polynomial regression for each surface to obtain a model
     # for the given statistic for each scale
@@ -34,37 +30,48 @@ def interpolate(data, stat):
         y_predict = model(xp)
 
         # Visualize data and compare with model
-        plt.scatter(xData, yData, c='b', facecolor='none', alpha=.5)
+        plt.scatter(xData, yData, c='b', facecolor='none', alpha=.3)
         plt.plot(xp, y_predict, c='purple')
         plt.xlabel("Log of Scale of Analysis")
         plt.ylabel(stat)
-        plt.show()
 
         # Replace old data with new data aligned on the same scale
-        for i, val in enumerate(xData):
-            if val not in base_x:
-                yData[i] = model(val)
+        d = {"scale of analysis": [], stat: []}
+        df = pd.DataFrame(data=d)
+        for i, val in enumerate(base_x):
+            if val not in surf["scale of analysis"].values:
+                new_stat = surf[stat][i] = model(np.log(val))
+                df.loc[i] = [val, new_stat]
+            else:
+                loc = np.where(surf["scale of analysis"].values == val)[0][0]
+                old_stat = surf[stat][loc]
+                df.loc[i] = [val, old_stat]
+        new_data.append(df)
+        # Visualize data and compare with model
+        print(df)
+        plt.plot(np.log(df["scale of analysis"]), df[stat], c='red')
+        plt.show()
 
     # Visualize new plots on the same scales
     print("\n\nNew Scales:\n")
-    colors = ['r', 'b', 'g', 'y']
-    for i, surf in enumerate(data):
+    colors = ['r', 'b', 'g', 'y', 'orange']
+    for i, surf in enumerate(new_data):
+        print(surf["scale of analysis"])
         plt.scatter(np.log(surf["scale of analysis"]), surf[stat], c=colors[i], alpha=.3)
     plt.xlabel("Log of Scale of Analysis")
     plt.ylabel(stat)
     plt.show()
-        
+
+    return new_data
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     stat = args[0]
-    filename1 = args[1]
-    filename2 = args[2]
-    filename3 = args[3]
-    filename4 = args[4]
 
     data = []
-    data.append(read_data(filename1))
-    data.append(read_data(filename2))
-    data.append(read_data(filename3))
-    data.append(read_data(filename4))
+    data.append(read_data('./../../samples/sample1.txt'))
+    data.append(read_data('./../../samples/sample2.txt'))
+    data.append(read_data('./../../samples/sample3.txt'))
+    data.append(read_data('./../../samples/sample4.txt'))
+    data.append(read_data('./../../samples/area-scale-test-data.txt'))
     interpolate(data, stat)
