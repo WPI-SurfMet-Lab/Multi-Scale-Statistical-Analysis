@@ -30,10 +30,10 @@ def interpolate(data, stat):
         y_predict = model(xp)
 
         # Visualize data and compare with model
-        plt.scatter(xData, yData, c='b', facecolor='none', alpha=.3)
-        plt.plot(xp, y_predict, c='purple')
-        plt.xlabel("Log of Scale of Analysis")
-        plt.ylabel(stat)
+        # plt.scatter(xData, yData, c='b', facecolor='none', alpha=.3)
+        # plt.plot(xp, y_predict, c='purple')
+        # plt.xlabel("Log of Scale of Analysis")
+        # plt.ylabel(stat)
 
         # Replace old data with new data aligned on the same scale
         d = {"scale of analysis": [], stat: []}
@@ -48,19 +48,19 @@ def interpolate(data, stat):
                 df.loc[i] = [val, old_stat]
         new_data.append(df)
         # Visualize data and compare with model
-        print(df)
-        plt.plot(np.log(df["scale of analysis"]), df[stat], c='red')
-        plt.show()
+        # print(df)
+        # plt.plot(np.log(df["scale of analysis"]), df[stat], c='red')
+        # plt.show()
 
     # Visualize new plots on the same scales
-    print("\n\nNew Scales:\n")
-    colors = ['r', 'b', 'g', 'y', 'orange']
-    for i, surf in enumerate(new_data):
-        print(surf["scale of analysis"])
-        plt.scatter(np.log(surf["scale of analysis"]), surf[stat], c=colors[i], alpha=.3)
-    plt.xlabel("Log of Scale of Analysis")
-    plt.ylabel(stat)
-    plt.show()
+    # print("\n\nNew Scales:\n")
+    # colors = ['r', 'b', 'g', 'y', 'orange']
+    # for i, surf in enumerate(new_data):
+    #     print(surf["scale of analysis"])
+    #     plt.scatter(np.log(surf["scale of analysis"]), surf[stat], c=colors[i], alpha=.3)
+    # plt.xlabel("Log of Scale of Analysis")
+    # plt.ylabel(stat)
+    # plt.show()
 
     return new_data
 
