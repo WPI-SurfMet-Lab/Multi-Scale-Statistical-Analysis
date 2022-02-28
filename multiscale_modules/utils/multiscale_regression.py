@@ -32,7 +32,7 @@ def multi_regression(data, predictor, stat, type):
     
     # Visualize resulting plot of R2 of the regression over all of the scales
     plt.scatter(data[0]["scale of analysis"], scores, marker='*', color='b')
-    plt.xlabel("Scale of analysis")
+    plt.xlabel("Log of Scale of analysis")
     plt.ylabel("R2")
     plt.show()
 
