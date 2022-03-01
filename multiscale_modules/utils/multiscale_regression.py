@@ -48,5 +48,7 @@ if __name__ == "__main__":
     data.append(read_data('./../../samples/sample4.txt'))
     data.append(read_data('./../../samples/area-scale-test-data.txt'))
     data = interpolate(data, stat)
+    # Change predictor list with measured outside statistic you would like to use
+    # Ex: Coefficient of friction [.3, .4, .5, .6, .7]
     predictor = [.3, .4, .5, .6, .7]
     multi_regression(data, predictor, stat, 'linear')
