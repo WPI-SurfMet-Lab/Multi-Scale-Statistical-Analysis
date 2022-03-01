@@ -1,4 +1,4 @@
-from read_data import *
+from read_data import read_data
 from interpolate import *
 import numpy as np
 from sklearn.linear_model import LinearRegression

@@ -64,14 +64,14 @@ def interpolate(data, stat):
 
     return new_data
 
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     stat = args[0]
 
-    data = []
-    data.append(read_data('./../../samples/sample1.txt'))
-    data.append(read_data('./../../samples/sample2.txt'))
-    data.append(read_data('./../../samples/sample3.txt'))
-    data.append(read_data('./../../samples/sample4.txt'))
-    data.append(read_data('./../../samples/area-scale-test-data.txt'))
+    data = [read_data('./../../samples/sample1.txt'),
+            read_data('./../../samples/sample2.txt'),
+            read_data('./../../samples/sample3.txt'),
+            read_data('./../../samples/sample4.txt'),
+            read_data('./../../samples/area-scale-test-data.txt')]
     interpolate(data, stat)
