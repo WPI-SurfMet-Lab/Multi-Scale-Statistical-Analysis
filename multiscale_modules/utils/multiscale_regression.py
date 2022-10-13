@@ -38,6 +38,12 @@ def multi_regression(data, predictor, stat, type):
 
 
 if __name__ == "__main__":
+    """Runs interpolation and multiscale regression
+
+    Run command: "python multiscale_regression.py {stat}"
+
+        stat (string): one of "relative area", "fractal complexity", or "r2"
+    """
     args = sys.argv[1:]
     stat = args[0]
 
