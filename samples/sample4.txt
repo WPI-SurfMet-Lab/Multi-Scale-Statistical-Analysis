@@ -1,8 +1,7 @@
 [2] Scale-sensitive fractal analysis: b10s4_bottom_b
 2019/06/06	11:23:18
 
-Scale of analysis	Relative area	Fractal complexity	R2	
-µm²				
+Scale of analysis	Relative area	Fractal complexity	R2					
 1.45597	1.4191	-11.3125	0.48814	
 1.55767	1.42208	-12.0307	0.553019	
 1.66648	1.42574	-12.995	0.614694	

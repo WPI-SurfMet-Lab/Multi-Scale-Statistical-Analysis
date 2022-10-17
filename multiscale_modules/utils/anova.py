@@ -6,10 +6,14 @@ from statsmodels.formula.api import ols
 from bioinfokit.analys import stat
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from interpolate import interpolate
+from read_data import load_data
 
-def anova(data, col1, col2):
-    x = [[1, 2], [3, 3], [4, 5], [4, 2]]
-    data = pd.DataFrame(x, columns=['A', 'B'])
+def anova(surf1, surf2, col_name):
+    data = pd.DataFrame()
+    data['A'] = surf1[col_name]
+    data['B'] = surf2[col_name]
+    col1, col2 = 'A', 'B'
     arr = []
     for col in data.columns:
         arr.append(data[col])
@@ -28,5 +32,8 @@ def lda(data_x, data_y, test_x):
     clf = LinearDiscriminantAnalysis()
     clf.fit(data_x, data_y)
     prediction = clf.predict(test_x)
-    
-anova(0, 'A', 'B')
+
+d1 = load_data('../../samples', 'sample1.txt')
+d2 = load_data('../../samples', 'sample2.txt')
+data = interpolate([d1, d2], 'relative area')
+anova(data[0], data[1], 'relative area')
