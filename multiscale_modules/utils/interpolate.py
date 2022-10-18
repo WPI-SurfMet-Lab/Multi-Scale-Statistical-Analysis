@@ -12,7 +12,7 @@ BASE = 0        # The surface to base the scales off of
 def interpolate(data, stat):
     # Get the scales to be the base of inteprolation
     base = data[BASE]
-    base_x = base["scale of analysis"]
+    base_x = base["scale_of_analysis"]
 
     new_data = []
 
@@ -21,7 +21,7 @@ def interpolate(data, stat):
     for surf in data:
         # Get data
         yData = surf[stat]
-        xData = np.log(surf["scale of analysis"])
+        xData = np.log(surf["scale_of_analysis"])
 
         # Train model
         weights = np.polyfit(xData, yData, DEGREE)
@@ -39,11 +39,11 @@ def interpolate(data, stat):
         d = {"scale of analysis": [], stat: []}
         df = pd.DataFrame(data=d)
         for i, val in enumerate(base_x):
-            if val not in surf["scale of analysis"].values:
+            if val not in surf["scale_of_analysis"].values:
                 new_stat = surf[stat][i] = model(np.log(val))
                 df.loc[i] = [val, new_stat]
             else:
-                loc = np.where(surf["scale of analysis"].values == val)[0][0]
+                loc = np.where(surf["scale_of_analysis"].values == val)[0][0]
                 old_stat = surf[stat][loc]
                 df.loc[i] = [val, old_stat]
         new_data.append(df)

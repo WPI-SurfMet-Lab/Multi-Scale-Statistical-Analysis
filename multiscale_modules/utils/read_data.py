@@ -28,5 +28,5 @@ def load_data(folder, filename):
         df (pd.DataFrame): the resulting dataframe after reading in the data from the file
     """
     data = np.loadtxt(os.path.join(folder, filename), dtype=float, skiprows=4)
-    df = pd.DataFrame(data, columns=["scale of analysis", "relative area", "fractal complexity", "r2"])
+    df = pd.DataFrame(data, columns=["scale_of_analysis", "relative_area", "fractal_complexity", "r2"])
     return df
